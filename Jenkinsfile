@@ -1,25 +1,34 @@
-pipeline {
-    agent any
+pipeline
+ {
+  agent any
+
+  tools
+   {
+    maven 'MAVEN_HOME'
+    jdk 'JAVA_HOME'
+   }
+
 
     stages {
-        stage('Build') {
-            steps {
-                //git 'https://github.com/vdespa-collab/java-rest-api-calculator.git'
-                sh './mvnw clean compile'
-                // bat '.\\mvnw clean compile'
-            }
-        }
-        stage('Test') {
-            steps {
-                sh './mvnw test'
-                // bat '.\\mvnw test'
-            }
+        stage ('Build Stage') {
 
-            post {
-                always {
-                    junit '**/target/surefire-reports/TEST-*.xml'
-                }
+            steps {
+               
+                    bat 'mvn clean compile'
+             
             }
         }
+
+        stage ('Testing Stage') {
+
+            steps {
+              
+                    bat 'mvn test'
+              
+            }
+        }
+
+
     }
-}
+
+ }
